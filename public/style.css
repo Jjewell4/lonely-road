@@ -1,0 +1,191 @@
+:root {
+  --bg: #0b0b0f;
+  --fg: #ece7dc;
+  --muted: #9b958b;
+  --red: #c8102e;
+  --yellow: #f2c230;
+  --panel: rgba(20, 20, 26, 0.92);
+  --line: #34343d;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  background: var(--bg);
+  color: var(--fg);
+  font: 16px/1.4 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+.scene {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+main, .setup { position: relative; z-index: 1; }
+
+.centerline { stroke-dasharray: 28 22; }
+body.playing .centerline { animation: drive 0.45s linear infinite; }
+
+@keyframes drive {
+  to { stroke-dashoffset: -50; }
+}
+
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: max(24px, env(safe-area-inset-top)) 16px 16px;
+  text-align: center;
+}
+
+h1 {
+  margin: 0 0 8px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.play {
+  width: min(68vw, 280px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 3px solid var(--red);
+  background: radial-gradient(circle at 50% 40%, #2b0a0f, #0b0b0f 70%);
+  color: var(--fg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  cursor: pointer;
+  box-shadow: 0 0 0 0 rgba(200, 16, 46, 0.5), 0 10px 40px rgba(0, 0, 0, 0.6);
+  transition: transform 0.12s ease;
+  font: inherit;
+}
+
+.play:active { transform: scale(0.96); }
+.play:focus-visible { outline: 3px solid var(--yellow); outline-offset: 6px; }
+
+.play-icon {
+  width: 0;
+  height: 0;
+  margin-left: 10px;
+  border-style: solid;
+  border-width: 30px 0 30px 50px;
+  border-color: transparent transparent transparent var(--fg);
+}
+
+.play-label {
+  max-width: 80%;
+  font-size: 17px;
+  font-style: italic;
+}
+
+body.playing .play { animation: pulse 1.2s ease-out infinite; }
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(200, 16, 46, 0.55), 0 10px 40px rgba(0, 0, 0, 0.6); }
+  100% { box-shadow: 0 0 0 28px rgba(200, 16, 46, 0), 0 10px 40px rgba(0, 0, 0, 0.6); }
+}
+
+.status {
+  min-height: 1.4em;
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.setup {
+  margin: 0 16px max(16px, env(safe-area-inset-bottom));
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+.setup summary {
+  padding: 12px 16px;
+  cursor: pointer;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.setup-body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 0 16px 16px;
+}
+
+.hint { margin: 0; font-size: 14px; color: var(--muted); }
+
+.file input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+
+.file span,
+.setup button {
+  display: inline-block;
+  padding: 10px 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #1d1d24;
+  color: var(--fg);
+  font: inherit;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.file input:focus-visible + span,
+.setup button:focus-visible { outline: 2px solid var(--yellow); outline-offset: 2px; }
+
+.setup button.primary { background: var(--red); border-color: var(--red); }
+.setup button.danger { color: #ff8a8a; align-self: flex-start; }
+.setup button:disabled { opacity: 0.5; cursor: default; }
+
+.editor { display: flex; flex-direction: column; gap: 14px; }
+.editor audio { width: 100%; }
+
+.marks {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  align-items: end;
+}
+
+.marks label { display: flex; flex-direction: column; gap: 4px; font-size: 13px; color: var(--muted); }
+
+.marks input {
+  width: 100%;
+  padding: 9px 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #111116;
+  color: var(--fg);
+  font: inherit;
+}
+
+.row { display: flex; gap: 10px; flex-wrap: wrap; }
+.row button { flex: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  body.playing .centerline,
+  body.playing .play { animation: none; }
+}

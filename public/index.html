@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Lonely Road</title>
+  <meta name="description" content="One tap. One lonely road.">
+  <meta name="theme-color" content="#0b0b0f">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" href="/icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <svg class="scene" viewBox="0 0 400 800" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    <defs>
+      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#0b0b0f"/>
+        <stop offset="1" stop-color="#3a0d12"/>
+      </linearGradient>
+    </defs>
+    <rect width="400" height="520" fill="url(#sky)"/>
+    <rect y="520" width="400" height="280" fill="#14141a"/>
+    <circle cx="318" cy="150" r="30" fill="#d9d3c7" opacity="0.85"/>
+    <path d="M196 520 L204 520 L380 800 L20 800 Z" fill="#2a2a31"/>
+    <path d="M196 520 L20 800 M204 520 L380 800" stroke="#c8102e" stroke-width="3"/>
+    <path class="centerline" d="M200 520 L200 800" stroke="#f2c230" stroke-width="10"/>
+  </svg>
+
+  <main>
+    <h1>Lonely Road</h1>
+
+    <button id="play" class="play" type="button" aria-describedby="status">
+      <span class="play-icon" aria-hidden="true"></span>
+      <span class="play-label">I walk a lonely road…</span>
+    </button>
+
+    <p id="status" class="status" role="status"></p>
+  </main>
+
+  <details id="setup" class="setup">
+    <summary>Set up the clip</summary>
+    <div class="setup-body">
+      <p class="hint">
+        Pick the song file you bought (MP3 or M4A). Find the line, mark where it
+        starts and ends, then save. The clip is stored only on this device.
+      </p>
+
+      <label class="file">
+        <input id="file" type="file" accept="audio/*,.mp3,.m4a,.aac,.wav,.ogg,.flac">
+        <span>Choose song file…</span>
+      </label>
+
+      <div id="editor" class="editor" hidden>
+        <audio id="preview" controls preload="auto"></audio>
+
+        <div class="marks">
+          <label>Start (s)
+            <input id="start" type="number" inputmode="decimal" min="0" step="0.1" value="0">
+          </label>
+          <button id="markStart" type="button">Mark start here</button>
+          <label>End (s)
+            <input id="end" type="number" inputmode="decimal" min="0" step="0.1" value="10">
+          </label>
+          <button id="markEnd" type="button">Mark end here</button>
+        </div>
+
+        <div class="row">
+          <button id="previewClip" type="button">Preview clip</button>
+          <button id="save" type="button" class="primary">Save clip</button>
+        </div>
+      </div>
+
+      <button id="forget" type="button" class="danger" hidden>Delete saved clip</button>
+    </div>
+  </details>
+
+  <script src="/app.js" type="module"></script>
+</body>
+</html>
